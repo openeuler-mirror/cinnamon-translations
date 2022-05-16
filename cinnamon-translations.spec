@@ -1,14 +1,19 @@
 %global _trans_version 2018.12.11
-Name:                cinnamon-translations
-Version:             4.4.2
-Release:             1
-Summary:             Translations for Cinnamon and Nemo
-License:             GPLv2+
-URL:                 https://github.com/linuxmint/cinnamon-translations
-Source0:             %{url}/archive/%{version}/cinnamon-translations-%{version}.tar.gz
-Source1:             http://packages.linuxmint.com/pool/main/m/mint-translations/mint-translations_%{_trans_version}.tar.xz
-BuildRequires:       gettext
-BuildArch:           noarch
+
+Name:           cinnamon-translations
+Version:        5.2.2
+Release:        1
+Summary:        Translations for Cinnamon and Nemo
+License:        GPLv2+
+URL:            https://github.com/linuxmint/%{name}
+Source0:        https://github.com/linuxmint/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
+Source1:        http://packages.linuxmint.com/pool/main/m/mint-translations/mint-translations_%{_trans_version}.tar.xz
+
+BuildArch:      noarch
+
+BuildRequires:  gettext
+BuildRequires:  make
+
 %description
 Translations for Cinnamon, Nemo and Mintlocale.
 
@@ -20,10 +25,12 @@ Translations for Cinnamon, Nemo and Mintlocale.
 %{make_build} -C mint-translations
 
 %install
+# install mint translations for mintlocale
 %{_bindir}/find mint-translations -not -name 'mintlocale.mo' -type f -delete
 %{_bindir}/find . -name 'cinnamon-bluetooth.mo' -type f -delete
 %{__cp} -pr mint-translations/%{_datadir}/linuxmint/locale .%{_datadir}
 %{__cp} -pr .%{_prefix} %{buildroot}
+
 %find_lang cinnamon
 %find_lang mintlocale
 %find_lang nemo
@@ -37,5 +44,8 @@ Translations for Cinnamon, Nemo and Mintlocale.
 %license COPYING
 
 %changelog
+* Fri May 6 2022 lin zhang <lin.zhang@turbolinux.com.cn> - 5.2.2-1
+- Upgrade to 5.2.2
+
 * Mon Jul 27 2020 wangyue <wangyue92@huawei.com> - 4.4.2-1
 - package init
